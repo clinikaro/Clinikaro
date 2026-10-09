@@ -1,0 +1,6 @@
+{
+  "name": "Curayu",
+  "description": "Pan-India digital doctor and clinic appointment booking platform with multi-language support, nationwide city selection, instant digital OPD token slips, receptionist desk, and doctor portal.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        request.auth.token.email == 'saassuvidha@gmail.com'
+      );
+    }
+    
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Admins collection
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Patients collection (Registered and verified via Firebase Phone OTP)
+    match /patients/{patientId} {
+      allow read, write: if true;
+    }
+
+    // Clinics & Hospitals
+    match /clinics/{clinicId} {
+      allow read: if true;
+      allow create, update, delete: if true; // Allows SaaS Suvidha onboarding & receptionist demo
+    }
+
+    // Doctors
+    match /doctors/{doctorId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // Appointments (Guest booking flow + receptionist scanner & walk-in)
+    match /appointments/{appointmentId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if true;
+    }
+
+    // Support / Complaints tickets
+    match /supportTickets/{ticketId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+  }
+}

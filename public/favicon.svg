@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Golden Amber Squircle with large curved corners -->
+  <rect width="512" height="512" rx="128" fill="#DF931A" />
+  
+  <!-- Heart Outline with smooth lobes -->
+  <path
+    d="M 240 168
+       C 214 116, 160 98, 158 98
+       C 102 112, 94 176, 96 186
+       C 98 248, 130 286, 240 332
+       C 350 286, 382 248, 384 186
+       C 386 176, 378 112, 322 98
+       C 320 98, 266 116, 240 168 Z"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="35"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Stethoscope Lower Tube Loop -->
+  <path
+    d="M 240 332
+       C 220 382, 214 400, 224 424
+       C 238 450, 280 450, 308 434
+       C 334 420, 344 394, 348 376"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="35"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <!-- Circular Stethoscope Diaphragm Ring -->
+  <circle
+    cx="370"
+    cy="344"
+    r="42"
+    fill="none"
+    stroke="#FFFFFF"
+    stroke-width="35"
+  />
+</svg>

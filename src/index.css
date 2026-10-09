@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary-teal: #0F5257;
+    --primary-teal-dark: #0A3A3D;
+    --primary-teal-light: #166B71;
+    --accent-gold: #D4A24C;
+    --accent-gold-light: #F4E8D0;
+    --accent-gold-dark: #B28333;
+    --bg-cream: #F7F9F8;
+    --text-main: #14282B;
+    --text-muted: #53696C;
+  }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--text-main);
+    background-color: var(--bg-cream);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom typography classes */
+.font-fraunces {
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+.font-work {
+  font-family: 'Work Sans', sans-serif;
+}
+
+.font-mono-num {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Prescription Slip card with notched sides and perforated line */
+.prescription-card {
+  background: #ffffff;
+  position: relative;
+  box-shadow: 0 10px 25px -5px rgba(15, 82, 87, 0.08), 0 8px 10px -6px rgba(15, 82, 87, 0.04);
+}
+
+.prescription-card-perforated {
+  border-top: 2px dashed #CBD5E1;
+  position: relative;
+}
+
+.prescription-notch-left {
+  position: absolute;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #F7F9F8;
+  z-index: 10;
+}
+
+.prescription-notch-right {
+  position: absolute;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #F7F9F8;
+  z-index: 10;
+}
+
+/* Print optimizations for OPD slip */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-opd-slip, #printable-opd-slip * {
+    visibility: visible;
+  }
+  #printable-opd-slip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}

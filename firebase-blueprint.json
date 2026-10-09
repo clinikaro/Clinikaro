@@ -1,0 +1,149 @@
+{
+  "entities": {
+    "Clinic": {
+      "title": "Clinic",
+      "description": "Clinic or Hospital partner on the MyDehriDoctor platform",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Clinic or hospital name in English" },
+        "nameHindi": { "type": "string", "description": "Clinic or hospital name in Hindi" },
+        "type": { "type": "string", "enum": ["clinic", "hospital"] },
+        "category": { "type": "string" },
+        "address": { "type": "string" },
+        "landmark": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "doctorsCount": { "type": "number" },
+        "bookingsThisMonth": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "pending", "suspended"] },
+        "subscriptionPlan": { "type": "string" },
+        "amountDue": { "type": "number" },
+        "dueDate": { "type": "string" },
+        "paymentStatus": { "type": "string", "enum": ["paid", "overdue", "pending"] },
+        "isFeatured": { "type": "boolean" },
+        "priorityNumber": { "type": "number" }
+      },
+      "required": ["name", "type", "address", "phone", "status"]
+    },
+    "Doctor": {
+      "title": "Doctor",
+      "description": "Registered doctor profile across clinics and hospitals in Dehri-on-Sone",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "nameHindi": { "type": "string" },
+        "clinicId": { "type": "string" },
+        "clinicName": { "type": "string" },
+        "specialty": { "type": "string" },
+        "specialtyHindi": { "type": "string" },
+        "qualification": { "type": "string" },
+        "experienceYears": { "type": "number" },
+        "fee": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "on_leave", "inactive"] },
+        "isVipBoosted": { "type": "boolean" },
+        "priorityNumber": { "type": "number" },
+        "photoUrl": { "type": "string" },
+        "about": { "type": "string" },
+        "aboutHindi": { "type": "string" },
+        "availableToday": { "type": "boolean" }
+      },
+      "required": ["name", "clinicId", "specialty", "fee", "status"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Booked appointment slip with token and QR verification code",
+      "type": "object",
+      "properties": {
+        "appointmentNumber": { "type": "string" },
+        "clinicId": { "type": "string" },
+        "clinicName": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "doctorSpecialty": { "type": "string" },
+        "patientName": { "type": "string" },
+        "patientAge": { "type": "number" },
+        "patientGender": { "type": "string", "enum": ["male", "female", "other"] },
+        "patientPhone": { "type": "string" },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "fee": { "type": "number" },
+        "paymentType": { "type": "string", "enum": ["clinic_cash_upi", "online_prepaid"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "unpaid"] },
+        "arrivalStatus": { "type": "string", "enum": ["not_arrived", "arrived", "scanned"] },
+        "scannedAt": { "type": "string" },
+        "bookingSource": { "type": "string", "enum": ["patient_online", "reception_walk_in"] },
+        "status": { "type": "string", "enum": ["confirmed", "cancelled", "completed"] },
+        "qrCodeData": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["appointmentNumber", "clinicId", "doctorId", "patientName", "patientPhone", "date", "timeSlot", "status"]
+    },
+    "SupportTicket": {
+      "title": "SupportTicket",
+      "description": "Customer and clinic complaints / support tickets for SaaS Suvidha team",
+      "type": "object",
+      "properties": {
+        "clinicOrPatientName": { "type": "string" },
+        "phone": { "type": "string" },
+        "issueSummary": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "resolved"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["clinicOrPatientName", "issueSummary", "status"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "SaaS Suvidha administrative accounts",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["super_admin", "staff"] }
+      },
+      "required": ["email", "role"]
+    },
+    "Patient": {
+      "title": "Patient",
+      "description": "Registered patients verified via Firebase Phone OTP",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient"] },
+        "authProvider": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "fullName", "phoneNumber", "role", "isVerified"]
+    }
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": { "$ref": "#/entities/Patient" },
+      "description": "Verified patient profiles registered through Firebase Phone SMS OTP"
+    },
+    "/clinics/{clinicId}": {
+      "schema": { "$ref": "#/entities/Clinic" },
+      "description": "List of partner clinics and hospitals in Dehri-on-Sone"
+    },
+    "/doctors/{doctorId}": {
+      "schema": { "$ref": "#/entities/Doctor" },
+      "description": "Doctors available across clinics and hospitals"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": { "$ref": "#/entities/Appointment" },
+      "description": "Patient appointments and reception walk-ins"
+    },
+    "/supportTickets/{ticketId}": {
+      "schema": { "$ref": "#/entities/SupportTicket" },
+      "description": "SaaS Suvidha partner support tickets"
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Authorized SaaS Suvidha administrators"
+    }
+  }
+}
